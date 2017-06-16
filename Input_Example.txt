@@ -1,0 +1,10 @@
+#FILTERING SCRIPT
+STEP Data = Modules/Load_PDB.py(<YourEnsemble.pdb>)
+#Retrieve Metrics
+STEP dDFIRE = Metrics/dDFIRE/dDFIRE.py(Data)
+STEP GFactor = Metrics/GFactor/GFactor.py(Data)
+#Filter Structures According to Best 25% Values
+STEP F_dDFIRE = Modules/Filter_Percent.py(0.25, dDFIRE, REVERSED=TRUE)
+STEP F_GFactor = Modules/Filter_Percent.py(0.25, GFactor)
+#Retrieve the Common Structures of the 2 Ensembles
+STEP Final = Modules/Voting.py(2, F_dDFIRE, F_GFactor)
